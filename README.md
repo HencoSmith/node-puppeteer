@@ -2,6 +2,12 @@
 MySQL, REST and Puppeteer example
 
 # Installation
+Set your Affluent username & password in the node-puppeteer/example.env file
+```env
+AFFLUENT_USERNAME="xxx"
+AFFLUENT_PASSWORD="xxx"
+```
+Start the containers
 ```bash
 docker compose up -d
 ```
