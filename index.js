@@ -12,6 +12,7 @@ const express = require('express');
 const { logger } = require('./components/helpers');
 const { migrate, getAllUsers } = require('./components/db');
 const { pull } = require('./components/pull');
+const { crawl } = require('./components/puppeteer');
 
 /**
  * App
@@ -22,9 +23,6 @@ const { pull } = require('./components/pull');
     logger('Migrating latest DB...');
     await migrate();
     
-    logger('Pulling data...');
-    await pull('https://reqres.in/api/users');
-
     logger('Starting API...');
     const app = express();
     const port = 8080; // Could also be set in env and passed to docker compose
@@ -35,9 +33,21 @@ const { pull } = require('./components/pull');
         return res.json(users);
     })
 
-    app.listen(port, () => {
+    app.listen(port, async () => {
+        // re pull on view; since MySQL db may be down or not up
+        // could also instead add some state to ping until db is up then
+        // pull once
+        logger('Pulling data...');
+        await pull('https://reqres.in/api/users');
+
         logger(`Listening at http://localhost:${port}`);
     });
+
+    logger('Pulling data...');
+    await pull('https://reqres.in/api/users');
+
+    logger('Crawling for data...');
+    await crawl('https://develop.pub.afflu.net');
 
     logger('Done.');
 })();

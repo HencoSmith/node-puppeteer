@@ -30,7 +30,8 @@
     "knex": "^0.95.6",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
-    "mysql2": "^2.2.5"
+    "mysql2": "^2.2.5",
+    "puppeteer": "^10.1.0"
   },
   "devDependencies": {
     "eslint": "^7.29.0",

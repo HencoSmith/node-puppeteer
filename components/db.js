@@ -29,7 +29,7 @@ const database = knex({
 module.exports = {
     migrate: async () => {
         try {
-            database.migrate.latest();
+            await database.migrate.latest();
         } catch (err) {
             logger(`DB not up - ${err.message}`, 'red');
         }
@@ -37,7 +37,7 @@ module.exports = {
 
     insertUsers: async (users) => {
         try {
-            database.migrate.latest();
+            await database.migrate.latest();
             await database('users').insert(users);
         } catch (err) {
             // Skip duplicates
