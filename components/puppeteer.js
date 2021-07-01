@@ -71,7 +71,8 @@ module.exports = {
             }
             financeData.push({
                 id: Math.round(i / 3),
-                date: moment(filteredData[i]).format('YYYY-MM-DD'),
+                // Improved by specifying data format input
+                date: moment(filteredData[i], 'dddd, MMM DD, YYYY').format('YYYY-MM-DD'),
                 commissions_total: parseFloat((filteredData[i + 1]).replace(/\$|,/g, '')),
                 clicks: parseInt(filteredData[i + 2].replace(/,/g, ''), 10),
             });
