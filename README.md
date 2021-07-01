@@ -16,7 +16,8 @@ The env file is only committed as part of the example; in production this file s
 In production the variables would be set in the environment e.g. '/etc/environment' and the env file can be omitted from the compose file.
 
 # View
-http://localhost:8080/
+http://localhost:8080/users
+http://localhost:8080/finance
 
 # Container Helpers
 Enter the container 
@@ -30,6 +31,10 @@ docker compose logs web -f
 NPM
 ```bash
 docker compose exec web npm -v
+```
+DB
+```bash
+docker compose exec mysql mysql --user=example --password test_db
 ```
 
 # Knex Helpers

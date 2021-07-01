@@ -21,7 +21,8 @@ module.exports = {
         let totalPages = 99;
 
         while (page <= totalPages) {
-            const currentPage = await axios.get(`${url}?page=${page}`)
+            // eslint-disable-next-line no-await-in-loop
+            const currentPage = await axios.get(`${url}?page=${page}`);
             if (currentPage.status !== 200) {
                 logger(`pull failed - ${currentPage.status} '${currentPage.statusText}'`, 'red');
                 return;
@@ -33,10 +34,11 @@ module.exports = {
             // (using a queue like rabbitmq or redis) then bulk insert a large amount;
             // but since the dataset is small and no computation is required on the data
             // a simple await should be fine
+            // eslint-disable-next-line no-await-in-loop
             await insertUsers(users);
 
             page += 1;
             totalPages = data.total_pages;
         }
     },
-}
+};

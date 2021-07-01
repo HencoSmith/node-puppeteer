@@ -38,24 +38,50 @@ module.exports = {
     insertUsers: async (users) => {
         try {
             await database.migrate.latest();
+            // This could be improved by making sure the entire page
+            // is not skipped if one entry is a duplicate
             await database('users').insert(users);
         } catch (err) {
             // Skip duplicates
             if (err.message.includes('Duplicate entry')) {
                 return;
-            };
+            }
             logger(`Insert failure - ${err.message}`, 'red');
-            return;
         }
     },
 
-    getAllUsers: async (users) => {
+    getAllUsers: async () => {
         try {
             const users = await database.from('users').select();
             return users;
         } catch (err) {
             logger(`Retrieve failure - ${err.message}`, 'red');
-            return;
+            return [];
         }
-    }
+    },
+
+    insertFinance: async (data) => {
+        try {
+            await database.migrate.latest();
+            // This could be improved by making sure the entire page
+            // is not skipped if one entry is a duplicate
+            await database('finance').insert(data);
+        } catch (err) {
+            // Skip duplicates
+            if (err.message.includes('Duplicate entry')) {
+                return;
+            }
+            logger(`Insert failure - ${err.message}`, 'red');
+        }
+    },
+
+    getAllFinanceData: async () => {
+        try {
+            const finance = await database.from('finance').select();
+            return finance;
+        } catch (err) {
+            logger(`Retrieve failure - ${err.message}`, 'red');
+            return [];
+        }
+    },
 };
